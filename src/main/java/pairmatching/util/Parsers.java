@@ -110,4 +110,14 @@ public final class Parsers {
         }
         return new MatchingInput(course, level, mission);
     }
+
+    public static boolean parseYesOrNo(String yesOrNo) {
+        Pattern pattern = Pattern.compile("^(?<answer>(네|아니오)+)$");
+        Matcher matcher = pattern.matcher(yesOrNo);
+        if (!matcher.matches()) {
+            throw new IllegalArgumentException(
+                "[ERROR] 네/아니오 내용의 형식이 올바르지 않습니다." + "(입력값: \"" + yesOrNo + "\")");
+        }
+        return matcher.group("answer").equals("네");
+    }
 }

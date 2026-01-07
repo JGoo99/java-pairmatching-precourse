@@ -2,6 +2,7 @@ package pairmatching.service;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import pairmatching.domain.MatchingHistory;
 import pairmatching.domain.MatchingInput;
 
@@ -10,6 +11,10 @@ public class MatchingRepository {
 
     public static void add(MatchingHistory matchingHistory) {
         MATCHING_HISTORY_REPOSITORY.put(matchingHistory.getMatchingInput(), matchingHistory);
+    }
+
+    public static Optional<MatchingHistory> getIfExists(MatchingInput matchingInput) {
+        return Optional.ofNullable(MATCHING_HISTORY_REPOSITORY.get(matchingInput));
     }
 
     public void clear() {

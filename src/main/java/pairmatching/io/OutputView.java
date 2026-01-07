@@ -1,6 +1,5 @@
 package pairmatching.io;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import pairmatching.domain.Course;
@@ -8,6 +7,11 @@ import pairmatching.domain.Pairs;
 import pairmatching.service.MissionRegister;
 
 public class OutputView {
+    public static void askReMatching() {
+        System.out.println("\n매칭 정보가 있습니다. 다시 매칭하시겠습니까?\n"
+            + "네 | 아니오");
+    }
+
     public void printMenu() {
         System.out.println("\n기능을 선택하세요.\n"
             + "1. 페어 매칭\n"

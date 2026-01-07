@@ -1,7 +1,6 @@
 package pairmatching.io;
 
 import camp.nextstep.edu.missionutils.Console;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import pairmatching.domain.MatchingInput;
@@ -9,27 +8,18 @@ import pairmatching.util.Parsers;
 import pairmatching.util.Retry;
 
 public class InputView {
-    public String readNonBlankLine() {
+    public static boolean readYesOrNo() {
+        return Retry.untilSuccess(() -> {
+            String yesOrNo = readNonBlankLine();
+            return Parsers.parseYesOrNo(yesOrNo);
+        });
+    }
+
+    public static String readNonBlankLine() {
         return Retry.untilSuccess(() -> Parsers.parseNonBlank(readTrimmedLineOrThrow()));
     }
 
-    public int readInt() {
-        return Retry.untilSuccess(() -> Parsers.parseIntStrict(readTrimmedLineOrThrow()));
-    }
-
-    public int readIntInRange(int min, int max) {
-        return Retry.untilSuccess(() -> Parsers.parseIntInRange(readTrimmedLineOrThrow(), min, max));
-    }
-
-    public long readLong() {
-        return Retry.untilSuccess(() -> Parsers.parseLongStrict(readTrimmedLineOrThrow()));
-    }
-
-    public long readLongInRange(long min, long max) {
-        return Retry.untilSuccess(() -> Parsers.parseLongInRange(readTrimmedLineOrThrow(), min, max));
-    }
-
-    private String readTrimmedLineOrThrow() {
+    private static String readTrimmedLineOrThrow() {
         String line = Console.readLine();
         if (line == null) {
             throw new IllegalArgumentException("[ERROR] 입력이 비어있습니다." + "(입력값: \"" + line + "\")");
@@ -37,7 +27,7 @@ public class InputView {
         return line.trim();
     }
 
-    public String readMenu() {
+    public static String readMenu() {
         return Retry.untilSuccess(() -> {
             String menu = readNonBlankLine();
             Pattern pattern = Pattern.compile("^(1|2|3|Q)+$");
@@ -50,7 +40,7 @@ public class InputView {
         });
     }
 
-    public MatchingInput readMatchingInput() {
+    public static MatchingInput readMatchingInput() {
         return Retry.untilSuccess(() -> {
             String line = readNonBlankLine();
             return Parsers.parseMatchingRequirement(line);
