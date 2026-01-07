@@ -8,14 +8,16 @@ import pairmatching.domain.Crew;
 import pairmatching.util.Parsers;
 
 public class CrewRegister {
-    private static List<Crew> DOMAINS;
+    private static List<Crew> BACKEND_CREWS;
+    private static List<Crew> FRONTEND_CREWS;
 
     public static void init() {
-        DOMAINS = new ArrayList<>();
         List<Crew> backendCrews = Parsers.parseCrews("src/main/resources/backend-crew.md");
         List<Crew> frontendCrews = Parsers.parseCrews("src/main/resources/frontend-crew.md");
         validateDuplicate(backendCrews);
         validateDuplicate(frontendCrews);
+        BACKEND_CREWS = backendCrews;
+        FRONTEND_CREWS = frontendCrews;
     }
 
     private static void validateDuplicate(List<Crew> backendCrews) {
@@ -33,8 +35,11 @@ public class CrewRegister {
     }
 
     public static void clear() {
-        if (DOMAINS != null) {
-            DOMAINS.clear();
+        if (BACKEND_CREWS != null) {
+            BACKEND_CREWS.clear();
+        }
+        if (FRONTEND_CREWS != null) {
+            FRONTEND_CREWS.clear();
         }
     }
 }

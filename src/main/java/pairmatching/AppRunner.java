@@ -3,6 +3,7 @@ package pairmatching;
 import pairmatching.io.InputView;
 import pairmatching.io.OutputView;
 import pairmatching.service.CrewRegister;
+import pairmatching.service.MissionRegister;
 
 public class AppRunner {
     private final InputView in;
@@ -14,9 +15,18 @@ public class AppRunner {
     }
 
     public void run() {
+        MissionRegister.init();
         CrewRegister.init();
 
         out.printMenu();
         String menu = in.readMenu();
+
+        out.printCourse();
+        out.printMissions();
+
+        out.askMatchingRequirement();
+        MatchingInput matchingInput = in.readMatchingInput();
+
+//        PairMatchingService.run(menu, matchingInput);
     }
 }

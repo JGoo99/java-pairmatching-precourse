@@ -4,14 +4,15 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import pairmatching.MatchingInput;
 import pairmatching.domain.Course;
 import pairmatching.domain.Crew;
+import pairmatching.domain.Level;
 
 public final class Parsers {
     private Parsers() {
@@ -79,5 +80,18 @@ public final class Parsers {
         } catch (IOException e) {
             throw new IllegalArgumentException("[ERROR] 파일이 유효하지 않습니다." + "(filename: \"" + filename + "\")");
         }
+    }
+
+    public static MatchingInput parseMatchingRequirement(String line) {
+        Pattern pattern = Pattern.compile(
+            "^(?<course>(백엔드|프론트엔드)+), (?<level>(레벨1|레벨2|레벨3|레벨4|레벨5)+), (?<mission>(자동차경주|로또|숫자야구게임|장바구니|결제|지하철노선도|성능개선|배포)+)$");
+        Matcher matcher = pattern.matcher(line);
+        if (!matcher.matches()) {
+            throw new IllegalArgumentException(
+                "[ERROR] 파일 내용의 형식이 올바르지 않습니다." + "(입력값: \"" + line + "\")");
+        }
+        return new MatchingInput(Course.getByName(matcher.group("course")),
+            Level.getByName(matcher.group("level")),
+            matcher.group("mission"));
     }
 }
