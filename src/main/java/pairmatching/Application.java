@@ -10,8 +10,5 @@ public class Application {
         } finally {
             // Console.close();
         }
-
-//        List<String> crewNames; // 파일에서 로드한 크루 이름 목록
-//        List<String> shuffledCrew = Randoms.shuffle(crewNames); // 섞인 크루 이름 목록
     }
 }

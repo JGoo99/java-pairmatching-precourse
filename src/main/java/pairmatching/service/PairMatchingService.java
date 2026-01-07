@@ -9,14 +9,36 @@ import pairmatching.domain.MatchingInput;
 import pairmatching.domain.Pairs;
 import pairmatching.io.InputView;
 import pairmatching.io.OutputView;
-import pairmatching.util.Retry;
 
 public class PairMatchingService {
     public static void run(String menu, MatchingInput matchingInput) {
-        List<Pairs> result = new ArrayList<>();
+        try {
 
+            if (menu.equals("1")) {
+                handleMenu1(matchingInput);
+                return;
+            }
+            if (menu.equals("2")) {
+                handleMenu2(matchingInput);
+                return;
+            }
+
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static void handleMenu2(MatchingInput matchingInput) {
         Optional<MatchingHistory> matchingHistory = MatchingRepository.getIfExists(matchingInput);
-        System.out.println(matchingHistory);
+        if (!matchingHistory.isPresent()) {
+            throw new IllegalArgumentException("[ERROR] 매칭 이력이 없습니다.");
+        }
+        OutputView.printResult(matchingHistory.get().getResult());
+    }
+
+    private static void handleMenu1(MatchingInput matchingInput) {
+        List<Pairs> result = new ArrayList<>();
+        Optional<MatchingHistory> matchingHistory = MatchingRepository.getIfExists(matchingInput);
         if (matchingHistory.isPresent()) {
             OutputView.askReMatching();
             boolean isRematching = InputView.readYesOrNo();
@@ -25,9 +47,6 @@ public class PairMatchingService {
                 return;
             }
         }
-
-        // TODO : 조회(1) 기능에 이미 만들어진 매칭이라면 재매칭 여부 묻기
-        // TODO : 조회(2) 기능에 이미 만들어진 매칭이라면 바로 반환
 
         List<Crew> crews = CrewRegister.getByCourse(matchingInput.getCourse());
         for (int i = 0; i < crews.size(); i = i + 2) {

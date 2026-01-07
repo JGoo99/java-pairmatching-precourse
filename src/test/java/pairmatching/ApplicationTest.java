@@ -100,6 +100,35 @@ class ApplicationTest extends NsTest {
         );
     }
 
+    @Test
+    @DisplayName("패어매칭 조회")
+    void test5() {
+        assertShuffleTest(
+            () -> {
+                run("1", "백엔드, 레벨1, 자동차경주", "2", "백엔드, 레벨1, 자동차경주", "Q");
+                assertThat(output()).contains(
+                    "태웅 : 백호", "치수 : 태섭", "라라 : 루루",
+                    "태웅 : 백호", "치수 : 태섭", "라라 : 루루");
+            },
+            Arrays.asList("태웅", "백호", "치수", "태섭", "라라", "루루"),
+            Arrays.asList("치수", "루루", "태웅", "라라", "백호", "태섭")
+        );
+    }
+
+    @Test
+    @DisplayName("패어매칭 조회 실패 - 매칭이력 없음")
+    void test6() {
+        assertShuffleTest(
+            () -> {
+                run("2", "백엔드, 레벨1, 자동차경주", "Q");
+                assertThat(output()).contains(
+                    "[ERROR] 매칭 이력이 없습니다.",
+                    "기능을 선택하세요.");
+            },
+            Arrays.asList("태웅", "백호", "치수", "태섭", "라라", "루루")
+        );
+    }
+
     @Override
     public void runMain() {
         Application.main(new String[]{});
