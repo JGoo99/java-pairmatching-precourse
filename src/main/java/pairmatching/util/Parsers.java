@@ -1,5 +1,18 @@
 package pairmatching.util;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import pairmatching.domain.Course;
+import pairmatching.domain.Crew;
+
 public final class Parsers {
     private Parsers() {
     }
@@ -22,7 +35,8 @@ public final class Parsers {
     public static int parseIntInRange(String s, int min, int max) {
         int n = parseIntStrict(s);
         if (n < min || n > max) {
-            throw new IllegalArgumentException("[ERROR] 입력 값은 " + min + "~" + max + " 사이여야 합니다." + "(입력값: \"" + s + "\")");
+            throw new IllegalArgumentException(
+                "[ERROR] 입력 값은 " + min + "~" + max + " 사이여야 합니다." + "(입력값: \"" + s + "\")");
         }
         return n;
     }
@@ -38,8 +52,32 @@ public final class Parsers {
     public static long parseLongInRange(String s, long min, long max) {
         long n = parseLongStrict(s);
         if (n < min || n > max) {
-            throw new IllegalArgumentException("[ERROR] 입력 값은 " + min + "~" + max + " 사이여야 합니다." + "(입력값: \"" + s + "\")");
+            throw new IllegalArgumentException(
+                "[ERROR] 입력 값은 " + min + "~" + max + " 사이여야 합니다." + "(입력값: \"" + s + "\")");
         }
         return n;
+    }
+
+    public static List<Crew> parseCrews(String filename) {
+        List<Crew> crews = new ArrayList<>();
+        try (BufferedReader reader = Files.newBufferedReader(Paths.get(filename), StandardCharsets.UTF_8)) {
+            String line;
+            int lineNo = 0;
+
+            while ((line = reader.readLine()) != null) {
+                Pattern pattern = Pattern.compile("^(?<name>\\S+)$");
+                Matcher matcher = pattern.matcher(line);
+                if (!matcher.matches()) {
+                    throw new IllegalArgumentException(
+                        "[ERROR] 파일 내용의 형식이 올바르지 않습니다." + " (lineNo: " + lineNo + ") " + "(입력값: \"" + line + "\")");
+                }
+
+                String name = Parsers.parseNonBlank(matcher.group("name"));
+                crews.add(new Crew(Course.BACKEND, name));
+            }
+            return crews;
+        } catch (IOException e) {
+            throw new IllegalArgumentException("[ERROR] 파일이 유효하지 않습니다." + "(filename: \"" + filename + "\")");
+        }
     }
 }

@@ -2,6 +2,7 @@ package pairmatching;
 
 import pairmatching.io.InputView;
 import pairmatching.io.OutputView;
+import pairmatching.service.CrewRegister;
 
 public class AppRunner {
     private final InputView in;
@@ -13,5 +14,6 @@ public class AppRunner {
     }
 
     public void run() {
+        CrewRegister.init();
     }
 }
