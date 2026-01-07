@@ -16,6 +16,7 @@ public class PairMatchingService {
         List<Pairs> result = new ArrayList<>();
 
         Optional<MatchingHistory> matchingHistory = MatchingRepository.getIfExists(matchingInput);
+        System.out.println(matchingHistory);
         if (matchingHistory.isPresent()) {
             OutputView.askReMatching();
             boolean isRematching = InputView.readYesOrNo();

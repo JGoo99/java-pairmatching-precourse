@@ -17,7 +17,7 @@ public class MatchingRepository {
         return Optional.ofNullable(MATCHING_HISTORY_REPOSITORY.get(matchingInput));
     }
 
-    public void clear() {
+    public static void clear() {
         if (!MATCHING_HISTORY_REPOSITORY.isEmpty()) {
             MATCHING_HISTORY_REPOSITORY.clear();
         }

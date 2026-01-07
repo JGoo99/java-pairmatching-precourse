@@ -1,11 +1,13 @@
 package pairmatching;
 
 import java.util.List;
+import pairmatching.domain.MatchingHistory;
 import pairmatching.domain.MatchingInput;
 import pairmatching.domain.Pairs;
 import pairmatching.io.InputView;
 import pairmatching.io.OutputView;
 import pairmatching.service.CrewRegister;
+import pairmatching.service.MatchingRepository;
 import pairmatching.service.MissionRegister;
 import pairmatching.service.PairMatchingService;
 
@@ -41,5 +43,11 @@ public class AppRunner {
     public static void init() {
         MissionRegister.init();
         CrewRegister.init();
+    }
+
+    public static void clear() {
+        MissionRegister.clear();
+        CrewRegister.clear();
+        MatchingRepository.clear();
     }
 }

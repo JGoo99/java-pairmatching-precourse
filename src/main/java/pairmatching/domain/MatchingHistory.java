@@ -18,4 +18,12 @@ public class MatchingHistory {
         this.matchingInput = matchingInput;
         this.result = result;
     }
+
+    @Override
+    public String toString() {
+        return "MatchingHistory{" +
+            "matchingInput=" + matchingInput +
+            ", result=" + result +
+            '}';
+    }
 }
