@@ -1,12 +1,10 @@
 package pairmatching.service;
 
-import java.nio.file.Path;
-import java.util.ArrayList;
+import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
-import java.util.Optional;
+import pairmatching.AppRunner;
 import pairmatching.domain.Course;
 import pairmatching.domain.Crew;
-import pairmatching.domain.MatchingInput;
 import pairmatching.util.Parsers;
 
 public class CrewRegister {
@@ -14,12 +12,16 @@ public class CrewRegister {
     private static List<Crew> FRONTEND_CREWS;
 
     public static void init() {
-        List<Crew> backendCrews = Parsers.parseCrews("src/main/resources/backend-crew.md");
-        List<Crew> frontendCrews = Parsers.parseCrews("src/main/resources/frontend-crew.md");
+        List<Crew> backendCrews = Parsers.parseCrews("src/main/resources/backend-crew.md", Course.BACKEND);
+        List<Crew> frontendCrews = Parsers.parseCrews("src/main/resources/frontend-crew.md", Course.FRONTEND);
         validateDuplicate(backendCrews);
         validateDuplicate(frontendCrews);
         BACKEND_CREWS = backendCrews;
         FRONTEND_CREWS = frontendCrews;
+    }
+
+    public static void main(String[] args) {
+        AppRunner.init();
     }
 
     private static void validateDuplicate(List<Crew> backendCrews) {
@@ -45,10 +47,10 @@ public class CrewRegister {
         }
     }
 
-    public static List<Crew> getByCourse(Course course) {
+    public static List<Crew> getShuffledByCourse(Course course) {
         if (course.equals(Course.BACKEND)) {
-            return BACKEND_CREWS;
+            return Randoms.shuffle(BACKEND_CREWS);
         }
-        return FRONTEND_CREWS;
+        return  Randoms.shuffle(FRONTEND_CREWS);
     }
 }

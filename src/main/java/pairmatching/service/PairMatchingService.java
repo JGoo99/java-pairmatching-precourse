@@ -9,6 +9,7 @@ import pairmatching.domain.MatchingInput;
 import pairmatching.domain.Pairs;
 import pairmatching.io.InputView;
 import pairmatching.io.OutputView;
+import pairmatching.util.Retry;
 
 public class PairMatchingService {
     public static void run(String menu, MatchingInput matchingInput) {
@@ -48,23 +49,31 @@ public class PairMatchingService {
             }
         }
 
-        List<Crew> crews = CrewRegister.getByCourse(matchingInput.getCourse());
-        for (int i = 0; i < crews.size(); i = i + 2) {
-            Crew firstCrew = crews.get(i);
-            Crew secondCrew = null;
-            int j = i + 1;
-            if (j <= crews.size() - 1) {
-                secondCrew = crews.get(j);
-            }
+        int count = 0;
+        while (count < 3) {
+            try {
+                List<Crew> crews = CrewRegister.getShuffledByCourse(matchingInput.getCourse());
+                for (int i = 0; i < crews.size(); i = i + 2) {
+                    Crew firstCrew = crews.get(i);
+                    Crew secondCrew = null;
+                    int j = i + 1;
+                    if (j <= crews.size() - 1) {
+                        secondCrew = crews.get(j);
+                    }
 
-            if (secondCrew == null) {
-                Pairs pairs = result.get(result.size() - 1);
-                pairs.addThird(firstCrew);
+                    if (secondCrew == null) {
+                        Pairs pairs = result.get(result.size() - 1);
+                        pairs.addThird(matchingInput.getLevel(), firstCrew);
+                        break;
+                    }
+                    result.add(new Pairs(firstCrew, secondCrew, matchingInput.getLevel()));
+                }
+                MatchingRepository.add(new MatchingHistory(matchingInput, result));
+                OutputView.printResult(result);
                 break;
+            } catch (IllegalArgumentException e) {
+                count++;
             }
-            result.add(new Pairs(firstCrew, secondCrew));
         }
-        MatchingRepository.add(new MatchingHistory(matchingInput, result));
-        OutputView.printResult(result);
     }
 }

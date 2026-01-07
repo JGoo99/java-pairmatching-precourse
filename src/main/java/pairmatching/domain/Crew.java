@@ -1,8 +1,14 @@
 package pairmatching.domain;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Crew {
+    private final Map<Level, List<Crew>> metCrews = new HashMap<>();
     private Course course;
     private String name;
 
@@ -11,8 +17,19 @@ public class Crew {
     }
 
     public Crew(Course course, String name) {
+        for (Level level : Level.values()) {
+            metCrews.put(level, new ArrayList<>());
+        }
         this.course = course;
         this.name = name;
+    }
+
+    public void addMetCrew(Level level, Crew crew) {
+        metCrews.get(level).add(crew);
+    }
+
+    public boolean isMet(Level level, Crew crew) {
+        return metCrews.get(level).contains(crew);
     }
 
     @Override

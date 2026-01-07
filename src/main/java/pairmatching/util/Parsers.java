@@ -62,8 +62,8 @@ public final class Parsers {
         return n;
     }
 
-    public static List<Crew> parseCrews(String filename) {
-        List<String> crews = new ArrayList<>();
+    public static List<Crew> parseCrews(String filename, Course course) {
+        List<Crew> crews = new ArrayList<>();
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(filename), StandardCharsets.UTF_8)) {
             String line;
             int lineNo = 0;
@@ -77,19 +77,12 @@ public final class Parsers {
                 }
 
                 String name = Parsers.parseNonBlank(matcher.group("name"));
-                crews.add(name);
+                crews.add(new Crew(course, name));
             }
-            return getShuffledCrews(crews, Course.BACKEND);
+            return crews;
         } catch (IOException e) {
             throw new IllegalArgumentException("[ERROR] 파일이 유효하지 않습니다." + "(filename: \"" + filename + "\")");
         }
-    }
-
-    public static List<Crew> getShuffledCrews(List<String> crews, Course course) {
-        List<String> shuffledCrew = Randoms.shuffle(crews);
-        return shuffledCrew.stream()
-            .map(x -> new Crew(course, x))
-            .collect(Collectors.toList());
     }
 
     public static MatchingInput parseMatchingRequirement(String line) {

@@ -10,6 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pairmatching.Application;
+import pairmatching.domain.Course;
+import pairmatching.domain.Crew;
 
 class ApplicationTest extends NsTest {
 
@@ -28,7 +30,10 @@ class ApplicationTest extends NsTest {
                 run("1", "백엔드, 레벨1, 자동차경주", "Q");
                 assertThat(output()).contains("태웅 : 백호", "치수 : 태섭");
             },
-            Arrays.asList("태웅", "백호", "치수", "태섭")
+            Arrays.asList(new Crew(Course.BACKEND, "태웅"),
+                new Crew(Course.BACKEND, "백호"),
+                new Crew(Course.BACKEND, "치수"),
+                new Crew(Course.BACKEND, "태섭"))
         );
     }
 
@@ -50,8 +55,12 @@ class ApplicationTest extends NsTest {
                 run("1", "백엔드, 레벨1, 자동차경주", "Q");
                 assertThat(output()).contains("태웅 : 백호", "치수 : 태섭 : 라라");
             },
-            Arrays.asList("태웅", "백호", "치수", "태섭", "라라")
-        );
+            Arrays.asList(new Crew(Course.BACKEND, "태웅"),
+                new Crew(Course.BACKEND, "백호"),
+                new Crew(Course.BACKEND, "치수"),
+                new Crew(Course.BACKEND, "태섭"),
+                new Crew(Course.BACKEND, "라라")
+            ));
     }
 //    @Test
 //    @DisplayName("같은 레벨에서 이미 페어를 맺은 경 페어 재매칭 시도")
@@ -71,16 +80,27 @@ class ApplicationTest extends NsTest {
     void test3() {
         assertShuffleTest(
             () -> {
-                run("1", "백엔드, 레벨1, 자동차경주", "1", "백엔드, 레벨1, 자동차경주", "네" , "Q");
+                run("1", "백엔드, 레벨1, 자동차경주", "1", "백엔드, 레벨1, 자동차경주", "네", "Q");
                 assertThat(output()).contains(
                     "태웅 : 백호", "치수 : 태섭", "라라 : 루루",
                     "매칭 정보가 있습니다. 다시 매칭하시겠습니까?\n"
                         + "네 | 아니오",
                     "치수 : 루루", "태웅 : 라라", "백호 : 태섭");
             },
-            Arrays.asList("태웅", "백호", "치수", "태섭", "라라", "루루"),
-            Arrays.asList("치수", "루루", "태웅", "라라", "백호", "태섭")
-        );
+            Arrays.asList(
+                new Crew(Course.BACKEND, "태웅"), new Crew(Course.BACKEND, "백호"),
+                new Crew(Course.BACKEND, "치수"),
+                new Crew(Course.BACKEND, "태섭"),
+                new Crew(Course.BACKEND, "라라"),
+                new Crew(Course.BACKEND, "루루")),
+            Arrays.asList(
+                new Crew(Course.BACKEND, "치수"),
+                new Crew(Course.BACKEND, "루루"),
+                new Crew(Course.BACKEND, "태웅"),
+                new Crew(Course.BACKEND, "라라"),
+                new Crew(Course.BACKEND, "백호"),
+                new Crew(Course.BACKEND, "태섭")
+            ));
     }
 
     @Test
@@ -95,8 +115,20 @@ class ApplicationTest extends NsTest {
                         + "네 | 아니오",
                     "태웅 : 백호", "치수 : 태섭", "라라 : 루루");
             },
-            Arrays.asList("태웅", "백호", "치수", "태섭", "라라", "루루"),
-            Arrays.asList("치수", "루루", "태웅", "라라", "백호", "태섭")
+            Arrays.asList(new Crew(Course.BACKEND, "태웅"),
+                new Crew(Course.BACKEND, "백호"),
+                new Crew(Course.BACKEND, "치수"),
+                new Crew(Course.BACKEND, "태섭"),
+                new Crew(Course.BACKEND, "라라"),
+                new Crew(Course.BACKEND, "루루")),
+
+            Arrays.asList(new Crew(Course.BACKEND, "치수"),
+                new Crew(Course.BACKEND, "루루"),
+                new Crew(Course.BACKEND, "태웅"),
+                new Crew(Course.BACKEND, "라라"),
+                new Crew(Course.BACKEND, "백호"),
+                new Crew(Course.BACKEND, "태섭"))
+
         );
     }
 
@@ -110,8 +142,20 @@ class ApplicationTest extends NsTest {
                     "태웅 : 백호", "치수 : 태섭", "라라 : 루루",
                     "태웅 : 백호", "치수 : 태섭", "라라 : 루루");
             },
-            Arrays.asList("태웅", "백호", "치수", "태섭", "라라", "루루"),
-            Arrays.asList("치수", "루루", "태웅", "라라", "백호", "태섭")
+            Arrays.asList(new Crew(Course.BACKEND, "태웅"),
+                new Crew(Course.BACKEND, "백호"),
+                new Crew(Course.BACKEND, "치수"),
+                new Crew(Course.BACKEND, "태섭"),
+                new Crew(Course.BACKEND, "라라"),
+                new Crew(Course.BACKEND, "루루")),
+
+            Arrays.asList(new Crew(Course.BACKEND, "치수"),
+                new Crew(Course.BACKEND, "루루"),
+                new Crew(Course.BACKEND, "태웅"),
+                new Crew(Course.BACKEND, "라라"),
+                new Crew(Course.BACKEND, "백호"),
+                new Crew(Course.BACKEND, "태섭"))
+
         );
     }
 
@@ -125,9 +169,31 @@ class ApplicationTest extends NsTest {
                     "[ERROR] 매칭 이력이 없습니다.",
                     "기능을 선택하세요.");
             },
-            Arrays.asList("태웅", "백호", "치수", "태섭", "라라", "루루")
+            Arrays.asList(new Crew(Course.BACKEND, "태웅"),
+                new Crew(Course.BACKEND, "백호"),
+                new Crew(Course.BACKEND, "치수"),
+                new Crew(Course.BACKEND, "태섭"),
+                new Crew(Course.BACKEND, "라라"),
+                new Crew(Course.BACKEND, "루루"))
+
         );
     }
+
+//    @Test
+//    @DisplayName("같은 레벨 동안은 같은 페어를 만나지 않는다.")
+//    void test7() {
+//        assertShuffleTest(
+//            () -> {
+//                run("1", "백엔드, 레벨4, 성능개선", "1", "백엔드, 레벨4, 배포", "Q");
+//                assertThat(output()).contains(
+//                    "태웅 : 백호", "치수 : 태섭", "라라 : 루루",
+//                    "치수 : 루루", "태웅 : 라라", "백호 : 태섭");
+//            },
+//            Arrays.asList("태웅", "백호", "치수", "태섭", "라라", "루루"),
+//            Arrays.asList("태웅", "백호", "치수", "태섭", "라라", "루루"),
+//            Arrays.asList("치수", "루루", "태웅", "라라", "백호", "태섭")
+//        );
+//    }
 
     @Override
     public void runMain() {
