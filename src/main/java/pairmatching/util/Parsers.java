@@ -1,5 +1,6 @@
 package pairmatching.util;
 
+import camp.nextstep.edu.missionutils.Randoms;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -9,10 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import pairmatching.MatchingInput;
+import java.util.stream.Collectors;
 import pairmatching.domain.Course;
 import pairmatching.domain.Crew;
 import pairmatching.domain.Level;
+import pairmatching.domain.MatchingInput;
 import pairmatching.service.MissionRegister;
 
 public final class Parsers {
@@ -61,7 +63,7 @@ public final class Parsers {
     }
 
     public static List<Crew> parseCrews(String filename) {
-        List<Crew> crews = new ArrayList<>();
+        List<String> crews = new ArrayList<>();
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(filename), StandardCharsets.UTF_8)) {
             String line;
             int lineNo = 0;
@@ -75,12 +77,19 @@ public final class Parsers {
                 }
 
                 String name = Parsers.parseNonBlank(matcher.group("name"));
-                crews.add(new Crew(Course.BACKEND, name));
+                crews.add(name);
             }
-            return crews;
+            return getShuffledCrews(crews, Course.BACKEND);
         } catch (IOException e) {
             throw new IllegalArgumentException("[ERROR] 파일이 유효하지 않습니다." + "(filename: \"" + filename + "\")");
         }
+    }
+
+    public static List<Crew> getShuffledCrews(List<String> crews, Course course) {
+        List<String> shuffledCrew = Randoms.shuffle(crews);
+        return shuffledCrew.stream()
+            .map(x -> new Crew(course, x))
+            .collect(Collectors.toList());
     }
 
     public static MatchingInput parseMatchingRequirement(String line) {

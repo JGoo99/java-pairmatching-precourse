@@ -1,6 +1,7 @@
 package pairmatching;
 
 import java.util.List;
+import pairmatching.domain.MatchingInput;
 import pairmatching.domain.Pairs;
 import pairmatching.io.InputView;
 import pairmatching.io.OutputView;
@@ -34,8 +35,7 @@ public class AppRunner {
             out.askMatchingRequirement();
             MatchingInput matchingInput = in.readMatchingInput();
 
-            List<Pairs> result = PairMatchingService.run(menu, matchingInput);
-            out.printResult(result);
+            out.printResult(PairMatchingService.run(menu, matchingInput));
         }
     }
 }

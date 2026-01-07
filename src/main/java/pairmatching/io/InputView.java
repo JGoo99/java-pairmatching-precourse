@@ -4,7 +4,7 @@ import camp.nextstep.edu.missionutils.Console;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import pairmatching.MatchingInput;
+import pairmatching.domain.MatchingInput;
 import pairmatching.util.Parsers;
 import pairmatching.util.Retry;
 
