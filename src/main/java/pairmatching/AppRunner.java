@@ -15,5 +15,8 @@ public class AppRunner {
 
     public void run() {
         CrewRegister.init();
+
+        out.printMenu();
+        String menu = in.readMenu();
     }
 }
