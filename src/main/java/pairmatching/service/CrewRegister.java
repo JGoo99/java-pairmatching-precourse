@@ -4,7 +4,9 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import pairmatching.domain.Course;
 import pairmatching.domain.Crew;
+import pairmatching.domain.MatchingInput;
 import pairmatching.util.Parsers;
 
 public class CrewRegister {
@@ -41,5 +43,12 @@ public class CrewRegister {
         if (FRONTEND_CREWS != null) {
             FRONTEND_CREWS.clear();
         }
+    }
+
+    public static List<Crew> getByCourse(Course course) {
+        if (course.equals(Course.BACKEND)) {
+            return BACKEND_CREWS;
+        }
+        return FRONTEND_CREWS;
     }
 }

@@ -7,6 +7,18 @@ public class MatchingInput {
     private final Level level;
     private final String missionName;
 
+    public Course getCourse() {
+        return course;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public String getMissionName() {
+        return missionName;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) {

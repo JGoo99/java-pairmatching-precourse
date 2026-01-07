@@ -8,8 +8,8 @@ import pairmatching.domain.MatchingInput;
 public class MatchingRepository {
     private static final Map<MatchingInput, MatchingHistory> MATCHING_HISTORY_REPOSITORY = new HashMap<>();
 
-    public void add(MatchingHistory matchingHistory) {
-
+    public static void add(MatchingHistory matchingHistory) {
+        MATCHING_HISTORY_REPOSITORY.put(matchingHistory.getMatchingInput(), matchingHistory);
     }
 
     public void clear() {

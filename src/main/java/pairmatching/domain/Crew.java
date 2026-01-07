@@ -6,6 +6,10 @@ public class Crew {
     private Course course;
     private String name;
 
+    public String getName() {
+        return name;
+    }
+
     public Crew(Course course, String name) {
         this.course = course;
         this.name = name;
@@ -27,9 +31,6 @@ public class Crew {
 
     @Override
     public String toString() {
-        return "Crew{" +
-            "course=" + course +
-            ", name='" + name + '\'' +
-            '}';
+        return name;
     }
 }

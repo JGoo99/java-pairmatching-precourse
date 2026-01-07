@@ -32,7 +32,7 @@ public class OutputView {
             + "ex) 백엔드, 레벨1, 자동차경주");
     }
 
-    public void printResult(List<Pairs> result) {
+    public static void printResult(List<Pairs> result) {
         System.out.println("페어 매칭 결과입니다.");
         System.out.println(
             result.stream()

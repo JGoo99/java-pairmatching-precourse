@@ -98,7 +98,7 @@ public final class Parsers {
         Matcher matcher = pattern.matcher(line);
         if (!matcher.matches()) {
             throw new IllegalArgumentException(
-                "[ERROR] 파일 내용의 형식이 올바르지 않습니다." + "(입력값: \"" + line + "\")");
+                "[ERROR] 과정, 레벨, 미션 내용의 형식이 올바르지 않습니다." + "(입력값: \"" + line + "\")");
         }
 
         Course course = Course.getByName(matcher.group("course"));

@@ -20,8 +20,7 @@ public class AppRunner {
 
     public void run() {
         while (true) {
-            MissionRegister.init();
-            CrewRegister.init();
+            init();
 
             out.printMenu();
             String menu = in.readMenu();
@@ -35,7 +34,12 @@ public class AppRunner {
             out.askMatchingRequirement();
             MatchingInput matchingInput = in.readMatchingInput();
 
-            out.printResult(PairMatchingService.run(menu, matchingInput));
+            PairMatchingService.run(menu, matchingInput);
         }
+    }
+
+    public static void init() {
+        MissionRegister.init();
+        CrewRegister.init();
     }
 }
