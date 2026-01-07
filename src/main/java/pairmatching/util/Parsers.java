@@ -13,6 +13,7 @@ import pairmatching.MatchingInput;
 import pairmatching.domain.Course;
 import pairmatching.domain.Crew;
 import pairmatching.domain.Level;
+import pairmatching.service.MissionRegister;
 
 public final class Parsers {
     private Parsers() {
@@ -90,8 +91,14 @@ public final class Parsers {
             throw new IllegalArgumentException(
                 "[ERROR] 파일 내용의 형식이 올바르지 않습니다." + "(입력값: \"" + line + "\")");
         }
-        return new MatchingInput(Course.getByName(matcher.group("course")),
-            Level.getByName(matcher.group("level")),
-            matcher.group("mission"));
+
+        Course course = Course.getByName(matcher.group("course"));
+        Level level = Level.getByName(matcher.group("level"));
+        String mission = matcher.group("mission");
+
+        if (!MissionRegister.contains(level, mission)) {
+            throw new IllegalArgumentException("[ERROR] 해당 레벨과 일치하는 미션은 존재하지 않습니다.");
+        }
+        return new MatchingInput(course, level, mission);
     }
 }

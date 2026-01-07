@@ -1,12 +1,9 @@
 package pairmatching.service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
 import pairmatching.domain.Level;
 
 public class MissionRegister {
@@ -28,12 +25,8 @@ public class MissionRegister {
         MISSIONS.get(Level.LEVEL4).add("배포");
     }
 
-    public static boolean contains(String target) {
-//        Optional<String> any = DOMAINS.stream()
-//            .filter(x -> x.equals(target))
-//            .findAny();
-//        return any.isPresent();
-        return true;
+    public static boolean contains(Level level, String mission) {
+        return MISSIONS.get(level).contains(mission);
     }
 
     public static void clear() {

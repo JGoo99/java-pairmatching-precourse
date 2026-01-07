@@ -1,7 +1,10 @@
 package pairmatching.io;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 import pairmatching.domain.Course;
+import pairmatching.domain.Pairs;
 import pairmatching.service.MissionRegister;
 
 public class OutputView {
@@ -27,5 +30,13 @@ public class OutputView {
     public void askMatchingRequirement() {
         System.out.println("\n과정, 레벨, 미션을 선택하세요.\n"
             + "ex) 백엔드, 레벨1, 자동차경주");
+    }
+
+    public static void printResult(List<Pairs> result) {
+        System.out.println("페어 매칭 결과입니다.");
+        System.out.println(
+            result.stream()
+                .map(Pairs::getStatus)
+                .collect(Collectors.joining("\n")));
     }
 }

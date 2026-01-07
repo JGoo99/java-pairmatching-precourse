@@ -1,9 +1,12 @@
 package pairmatching;
 
+import java.util.List;
+import pairmatching.domain.Pairs;
 import pairmatching.io.InputView;
 import pairmatching.io.OutputView;
 import pairmatching.service.CrewRegister;
 import pairmatching.service.MissionRegister;
+import pairmatching.service.PairMatchingService;
 
 public class AppRunner {
     private final InputView in;
@@ -15,18 +18,24 @@ public class AppRunner {
     }
 
     public void run() {
-        MissionRegister.init();
-        CrewRegister.init();
+        while (true) {
+            MissionRegister.init();
+            CrewRegister.init();
 
-        out.printMenu();
-        String menu = in.readMenu();
+            out.printMenu();
+            String menu = in.readMenu();
+            if (menu.equals("Q")) {
+                break;
+            }
 
-        out.printCourse();
-        out.printMissions();
+            out.printCourse();
+            out.printMissions();
 
-        out.askMatchingRequirement();
-        MatchingInput matchingInput = in.readMatchingInput();
+            out.askMatchingRequirement();
+            MatchingInput matchingInput = in.readMatchingInput();
 
-//        PairMatchingService.run(menu, matchingInput);
+            List<Pairs> result = PairMatchingService.run(menu, matchingInput);
+            out.printResult(result);
+        }
     }
 }
