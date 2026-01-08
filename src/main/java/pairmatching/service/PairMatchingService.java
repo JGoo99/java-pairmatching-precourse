@@ -15,7 +15,6 @@ import pairmatching.util.Retry;
 public class PairMatchingService {
     public static void run(String menu, MatchingInput matchingInput) {
         try {
-
             if (menu.equals("1")) {
                 handleMenu1(matchingInput);
                 return;
@@ -24,13 +23,17 @@ public class PairMatchingService {
                 handleMenu2(matchingInput);
                 return;
             }
-
+            handleMenu3();
         } catch (IllegalArgumentException e) {
             if (e.getMessage().equals("[ERROR] 매칭할 수 없습니다.")) {
                 return;
             }
             System.out.println(e.getMessage());
         }
+    }
+
+    private static void handleMenu3() {
+
     }
 
     private static void handleMenu2(MatchingInput matchingInput) {
