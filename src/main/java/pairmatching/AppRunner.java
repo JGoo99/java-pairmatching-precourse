@@ -21,8 +21,8 @@ public class AppRunner {
     }
 
     public void run() {
+        init();
         while (true) {
-            init();
 
             out.printMenu();
             String menu = in.readMenu();

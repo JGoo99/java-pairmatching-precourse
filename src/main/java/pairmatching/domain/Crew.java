@@ -38,7 +38,7 @@ public class Crew {
             return false;
         }
         Crew crew = (Crew) o;
-        return course == crew.course && Objects.equals(name, crew.name);
+        return course.getName().equals(crew.course.getName()) && Objects.equals(name, crew.name);
     }
 
     @Override

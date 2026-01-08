@@ -62,8 +62,8 @@ public final class Parsers {
         return n;
     }
 
-    public static List<Crew> parseCrews(String filename, Course course) {
-        List<Crew> crews = new ArrayList<>();
+    public static List<String> parseCrews(String filename) {
+        List<String> crews = new ArrayList<>();
         try (BufferedReader reader = Files.newBufferedReader(Paths.get(filename), StandardCharsets.UTF_8)) {
             String line;
             int lineNo = 0;
@@ -77,7 +77,7 @@ public final class Parsers {
                 }
 
                 String name = Parsers.parseNonBlank(matcher.group("name"));
-                crews.add(new Crew(course, name));
+                crews.add(name);
             }
             return crews;
         } catch (IOException e) {
@@ -87,7 +87,7 @@ public final class Parsers {
 
     public static MatchingInput parseMatchingRequirement(String line) {
         Pattern pattern = Pattern.compile(
-            "^(?<course>(백엔드|프론트엔드)+), (?<level>(레벨1|레벨2|레벨3|레벨4|레벨5)+), (?<mission>(자동차경주|로또|숫자야구게임|장바구니|결제|지하철노선도|성능개선|배포)+)$");
+            "^(?<course>(백엔드|프론트엔드)), (?<level>(레벨1|레벨2|레벨3|레벨4|레벨5)), (?<mission>(자동차경주|로또|숫자야구게임|장바구니|결제|지하철노선도|성능개선|배포))$");
         Matcher matcher = pattern.matcher(line);
         if (!matcher.matches()) {
             throw new IllegalArgumentException(
@@ -112,5 +112,11 @@ public final class Parsers {
                 "[ERROR] 네/아니오 내용의 형식이 올바르지 않습니다." + "(입력값: \"" + yesOrNo + "\")");
         }
         return matcher.group("answer").equals("네");
+    }
+
+    public static List<Crew> parseCrewList(List<String> crewNames, Course course) {
+        return crewNames.stream()
+            .map(x -> new Crew(course, x))
+            .collect(Collectors.toList());
     }
 }

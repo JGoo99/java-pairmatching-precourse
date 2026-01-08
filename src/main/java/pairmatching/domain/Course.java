@@ -19,6 +19,10 @@ public enum Course {
             .collect(Collectors.joining(" | "));
     }
 
+    public String getName() {
+        return name;
+    }
+
     public static Course getByName(String name) {
         return Arrays.stream(Course.values())
             .filter(x -> x.name.equals(name))

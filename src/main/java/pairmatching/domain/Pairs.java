@@ -32,6 +32,17 @@ public class Pairs {
         crews.add(third);
     }
 
+    public void metProcess(Level level) {
+        for (int i = 0; i < crews.size() - 1; i++) {
+            Crew cur = crews.get(i);
+            for (int j = i + 1; j < crews.size(); j++) {
+                Crew next = crews.get(j);
+                cur.addMetCrew(level, next);
+                next.addMetCrew(level, cur);
+            }
+        }
+    }
+
     @Override
     public String toString() {
         return "Pairs{" +

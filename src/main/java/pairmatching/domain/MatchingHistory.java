@@ -17,6 +17,7 @@ public class MatchingHistory {
     public MatchingHistory(MatchingInput matchingInput, List<Pairs> result) {
         this.matchingInput = matchingInput;
         this.result = result;
+        result.forEach(pairs -> pairs.metProcess(matchingInput.getLevel()));
     }
 
     @Override

@@ -3,6 +3,7 @@ package pairmatching.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import jdk.nashorn.internal.ir.IfNode;
 import pairmatching.domain.Crew;
 import pairmatching.domain.MatchingHistory;
 import pairmatching.domain.MatchingInput;
@@ -25,6 +26,9 @@ public class PairMatchingService {
             }
 
         } catch (IllegalArgumentException e) {
+            if (e.getMessage().equals("[ERROR] 매칭할 수 없습니다.")) {
+                return;
+            }
             System.out.println(e.getMessage());
         }
     }
@@ -70,10 +74,11 @@ public class PairMatchingService {
                 }
                 MatchingRepository.add(new MatchingHistory(matchingInput, result));
                 OutputView.printResult(result);
-                break;
+                return;
             } catch (IllegalArgumentException e) {
                 count++;
             }
         }
+        throw new IllegalArgumentException("[ERROR] 매칭할 수 없습니다.");
     }
 }
