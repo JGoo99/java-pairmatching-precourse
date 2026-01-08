@@ -27,7 +27,7 @@ public class InputView {
         return line.trim();
     }
 
-    public static String readMenu() {
+    public String readMenu() {
         return Retry.untilSuccess(() -> {
             String menu = readNonBlankLine();
             Pattern pattern = Pattern.compile("^(1|2|3|Q)+$");
@@ -40,7 +40,7 @@ public class InputView {
         });
     }
 
-    public static MatchingInput readMatchingInput() {
+    public MatchingInput readMatchingInput() {
         return Retry.untilSuccess(() -> {
             String line = readNonBlankLine();
             return Parsers.parseMatchingRequirement(line);

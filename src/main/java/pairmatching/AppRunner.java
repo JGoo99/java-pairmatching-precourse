@@ -1,9 +1,6 @@
 package pairmatching;
 
-import java.util.List;
-import pairmatching.domain.MatchingHistory;
 import pairmatching.domain.MatchingInput;
-import pairmatching.domain.Pairs;
 import pairmatching.io.InputView;
 import pairmatching.io.OutputView;
 import pairmatching.service.CrewRegister;

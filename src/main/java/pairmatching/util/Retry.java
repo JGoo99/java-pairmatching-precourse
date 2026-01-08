@@ -1,7 +1,8 @@
 package pairmatching.util;
 
 public final class Retry {
-    private Retry() {}
+    private Retry() {
+    }
 
     public static <T> T untilSuccess(SupplierWithEx<T> supplier) {
         while (true) {

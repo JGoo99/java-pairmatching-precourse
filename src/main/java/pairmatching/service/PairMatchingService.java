@@ -3,14 +3,12 @@ package pairmatching.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import jdk.nashorn.internal.ir.IfNode;
 import pairmatching.domain.Crew;
 import pairmatching.domain.MatchingHistory;
 import pairmatching.domain.MatchingInput;
 import pairmatching.domain.Pairs;
 import pairmatching.io.InputView;
 import pairmatching.io.OutputView;
-import pairmatching.util.Retry;
 
 public class PairMatchingService {
     public static void run(String menu, MatchingInput matchingInput) {

@@ -9,8 +9,8 @@ public enum Level {
     LEVEL4(4, "레벨4"),
     LEVEL5(5, "레벨5");
 
-    private int value;
-    private String name;
+    private final int value;
+    private final String name;
 
     Level(int value, String name) {
         this.value = value;

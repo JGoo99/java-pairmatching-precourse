@@ -12,7 +12,7 @@ public class CrewRegister {
     private static List<Crew> BACKEND_CREWS;
     private static List<Crew> FRONTEND_CREWS;
     private static List<String> BACKEND_CREW_NAMES;
-    private static List<String > FRONTEND_CREW_NAMES;
+    private static List<String> FRONTEND_CREW_NAMES;
 
     public static void init() {
         List<String> backendCrews = Parsers.parseCrews("src/main/resources/backend-crew.md");
