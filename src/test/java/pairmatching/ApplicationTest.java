@@ -143,6 +143,23 @@ class ApplicationTest extends NsTest {
         );
     }
 
+    @Test
+    @DisplayName("초기화")
+    void test8() {
+        assertShuffleTest(
+            () -> {
+                run("1", "백엔드, 레벨4, 성능개선", "3", "1", "백엔드, 레벨4, 성능개선", "Q");
+                assertThat(output()).contains(
+                    "태웅 : 백호", "치수 : 태섭", "대협 : 준호",
+                    "초기화 되었습니다.",
+                    "태웅 : 백호", "치수 : 태섭", "대협 : 준호");
+            },
+            Arrays.asList("태웅", "백호", "치수", "태섭", "대협", "준호"),
+            Arrays.asList("태웅", "백호", "치수", "태섭", "대협", "준호")
+        );
+
+    }
+
     @Override
     public void runMain() {
         Application.main(new String[]{});

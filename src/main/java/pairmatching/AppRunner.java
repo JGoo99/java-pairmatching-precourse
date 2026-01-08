@@ -27,13 +27,7 @@ public class AppRunner {
                 break;
             }
 
-            out.printCourse();
-            out.printMissions();
-
-            out.askMatchingRequirement();
-            MatchingInput matchingInput = in.readMatchingInput();
-
-            PairMatchingService.run(menu, matchingInput);
+            PairMatchingService.run(menu);
         }
     }
 

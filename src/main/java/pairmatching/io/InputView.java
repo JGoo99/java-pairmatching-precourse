@@ -40,7 +40,7 @@ public class InputView {
         });
     }
 
-    public MatchingInput readMatchingInput() {
+    public static MatchingInput readMatchingInput() {
         return Retry.untilSuccess(() -> {
             String line = readNonBlankLine();
             return Parsers.parseMatchingRequirement(line);

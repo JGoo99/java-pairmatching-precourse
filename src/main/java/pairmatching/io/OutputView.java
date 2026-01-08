@@ -12,6 +12,10 @@ public class OutputView {
             + "네 | 아니오");
     }
 
+    public static void printReset() {
+        System.out.println("초기화 되었습니다.");
+    }
+
     public void printMenu() {
         System.out.println("\n기능을 선택하세요.\n"
             + "1. 페어 매칭\n"
@@ -20,18 +24,18 @@ public class OutputView {
             + "Q. 종료");
     }
 
-    public void printCourse() {
+    public static void printCourse() {
         System.out.println("#############################################");
         System.out.println("과정: " + Course.getStatus());
     }
 
-    public void printMissions() {
+    public static void printMissions() {
         System.out.print("미션:");
         System.out.println(MissionRegister.getStatus());
         System.out.println("#############################################");
     }
 
-    public void askMatchingRequirement() {
+    public static void askMatchingRequirement() {
         System.out.println("\n과정, 레벨, 미션을 선택하세요.\n"
             + "ex) 백엔드, 레벨1, 자동차경주");
     }

@@ -1,8 +1,11 @@
 package pairmatching.service;
 
+import static pairmatching.io.InputView.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import pairmatching.AppRunner;
 import pairmatching.domain.Crew;
 import pairmatching.domain.MatchingHistory;
 import pairmatching.domain.MatchingInput;
@@ -11,17 +14,24 @@ import pairmatching.io.InputView;
 import pairmatching.io.OutputView;
 
 public class PairMatchingService {
-    public static void run(String menu, MatchingInput matchingInput) {
+    public static void run(String menu) {
         try {
+            if (menu.equals("3")) {
+                handleMenu3();
+                return;
+            }
+
+            OutputView.printCourse();
+            OutputView.printMissions();
+            OutputView.askMatchingRequirement();
+            MatchingInput matchingInput = InputView.readMatchingInput();
+
             if (menu.equals("1")) {
                 handleMenu1(matchingInput);
                 return;
             }
-            if (menu.equals("2")) {
-                handleMenu2(matchingInput);
-                return;
-            }
-            handleMenu3();
+            handleMenu2(matchingInput);
+
         } catch (IllegalArgumentException e) {
             if (e.getMessage().equals("[ERROR] 매칭할 수 없습니다.")) {
                 return;
@@ -31,7 +41,9 @@ public class PairMatchingService {
     }
 
     private static void handleMenu3() {
-
+        AppRunner.clear();
+        AppRunner.init();
+        OutputView.printReset();
     }
 
     private static void handleMenu2(MatchingInput matchingInput) {
@@ -47,7 +59,7 @@ public class PairMatchingService {
         Optional<MatchingHistory> matchingHistory = MatchingRepository.getIfExists(matchingInput);
         if (matchingHistory.isPresent()) {
             OutputView.askReMatching();
-            boolean isRematching = InputView.readYesOrNo();
+            boolean isRematching = readYesOrNo();
             if (!isRematching) {
                 OutputView.printResult(matchingHistory.get().getResult());
                 return;
