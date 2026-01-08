@@ -1,6 +1,5 @@
 package pairmatching.util;
 
-import camp.nextstep.edu.missionutils.Randoms;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -69,12 +68,8 @@ public final class Parsers {
             int lineNo = 0;
 
             while ((line = reader.readLine()) != null) {
-                Pattern pattern = Pattern.compile("^(?<name>\\S+)$");
-                Matcher matcher = pattern.matcher(line);
-                if (!matcher.matches()) {
-                    throw new IllegalArgumentException(
-                        "[ERROR] 파일 내용의 형식이 올바르지 않습니다." + " (lineNo: " + lineNo + ") " + "(입력값: \"" + line + "\")");
-                }
+                Matcher matcher = RegexUtils.requireMatches(Pattern.compile("^(?<name>\\S+)$"), line,
+                    "[ERROR] 파일 내용의 형식이 올바르지 않습니다." + " (lineNo: " + lineNo + ") " + "(입력값: \"" + line + "\")");
 
                 String name = Parsers.parseNonBlank(matcher.group("name"));
                 crews.add(name);
@@ -86,13 +81,10 @@ public final class Parsers {
     }
 
     public static MatchingInput parseMatchingRequirement(String line) {
-        Pattern pattern = Pattern.compile(
-            "^(?<course>(백엔드|프론트엔드)), (?<level>(레벨1|레벨2|레벨3|레벨4|레벨5)), (?<mission>(자동차경주|로또|숫자야구게임|장바구니|결제|지하철노선도|성능개선|배포))$");
-        Matcher matcher = pattern.matcher(line);
-        if (!matcher.matches()) {
-            throw new IllegalArgumentException(
-                "[ERROR] 과정, 레벨, 미션 내용의 형식이 올바르지 않습니다." + "(입력값: \"" + line + "\")");
-        }
+        Matcher matcher = RegexUtils.requireMatches(
+            Pattern.compile(
+                "^(?<course>(백엔드|프론트엔드)), (?<level>(레벨1|레벨2|레벨3|레벨4|레벨5)), (?<mission>(자동차경주|로또|숫자야구게임|장바구니|결제|지하철노선도|성능개선|배포))$"),
+            line, "[ERROR] 과정, 레벨, 미션 내용의 형식이 올바르지 않습니다." + "(입력값: \"" + line + "\")");
 
         Course course = Course.getByName(matcher.group("course"));
         Level level = Level.getByName(matcher.group("level"));
@@ -105,12 +97,9 @@ public final class Parsers {
     }
 
     public static boolean parseYesOrNo(String yesOrNo) {
-        Pattern pattern = Pattern.compile("^(?<answer>(네|아니오)+)$");
-        Matcher matcher = pattern.matcher(yesOrNo);
-        if (!matcher.matches()) {
-            throw new IllegalArgumentException(
-                "[ERROR] 네/아니오 내용의 형식이 올바르지 않습니다." + "(입력값: \"" + yesOrNo + "\")");
-        }
+        Matcher matcher = RegexUtils.requireMatches(
+            Pattern.compile("^(?<answer>(네|아니오)+)$"),
+            yesOrNo, "[ERROR] 네/아니오 내용의 형식이 올바르지 않습니다." + "(입력값: \"" + yesOrNo + "\")");
         return matcher.group("answer").equals("네");
     }
 
